@@ -8,6 +8,7 @@ import Login from "./Pages/auth/Login";
 import Register from "./Pages/auth/Register";
 import Home from "./Pages/Home";
 import Header from "./components/nav/Header";
+import SideDrawer from "./components/drawer/SideDrawer";
 import RegisterComplete from "./Pages/auth/RegisterComplete";
 import ForgotPassword from "./Pages/auth/ForgotPassword";
 import History from "./Pages/user/History";
@@ -21,6 +22,14 @@ import CategoryUpdate from "./Pages/admin/category/CategoryUpdate";
 import SubCreate from "./Pages/admin/sub/SubCreate";
 import SubUpdate from "./Pages/admin/sub/SubUpdate";
 import ProductCreate from "./Pages/admin/product/ProductCreate";
+import AllProducts from "./Pages/admin/product/AllProducts";
+import ProductUpdate from "./Pages/admin/product/ProductUpdate";
+import Product from "./Pages/Product";
+import CategoryHome from "./Pages/category/CategoryHome";
+import SubHome from "./Pages/sub/SubHome";
+import Shop from "./Pages/Shop";
+import Cart from "./Pages/Cart";
+import Checkout from "./Pages/Checkout";
 
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
@@ -59,6 +68,7 @@ const App = () => {
   return (
     <>
       <Header />
+      <SideDrawer />
       <ToastContainer />
       <Switch>
         <Route exact path="/" component={Home} />
@@ -79,6 +89,18 @@ const App = () => {
         <AdminRoute exact path="/admin/sub" component={SubCreate} />
         <AdminRoute exact path="/admin/sub/:slug" component={SubUpdate} />
         <AdminRoute exact path="/admin/product" component={ProductCreate} />
+        <AdminRoute exact path="/admin/products" component={AllProducts} />
+        <AdminRoute
+          exact
+          path="/admin/product/:slug"
+          component={ProductUpdate}
+        />
+        <Route exact path="/product/:slug" component={Product} />
+        <Route exact path="/category/:slug" component={CategoryHome} />
+        <Route exact path="/sub/:slug" component={SubHome} />
+        <Route exact path="/shop" component={Shop} />
+        <Route exact path="/cart" component={Cart} />
+        <UserRoute exact path="/checkout" component={Checkout} />
       </Switch>
     </>
   );
