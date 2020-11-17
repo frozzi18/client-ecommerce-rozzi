@@ -1,39 +1,75 @@
-import React, { useEffect } from "react";
+import React, { useEffect, lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
 import "react-toastify/dist/ReactToastify.css";
-
-import Login from "./Pages/auth/Login";
-import Register from "./Pages/auth/Register";
-import Home from "./Pages/Home";
-import Header from "./components/nav/Header";
-import SideDrawer from "./components/drawer/SideDrawer";
-import RegisterComplete from "./Pages/auth/RegisterComplete";
-import ForgotPassword from "./Pages/auth/ForgotPassword";
-import History from "./Pages/user/History";
-import UserRoute from "./components/routes/UserRoute";
-import AdminRoute from "./components/routes/AdminRoute";
-import Password from "./Pages/user/Password";
-import Wishlist from "./Pages/user/Wishlist";
-import AdminDashboard from "./Pages/admin/AdminDashboard";
-import CategoryCreate from "./Pages/admin/category/CategoryCreate";
-import CategoryUpdate from "./Pages/admin/category/CategoryUpdate";
-import SubCreate from "./Pages/admin/sub/SubCreate";
-import SubUpdate from "./Pages/admin/sub/SubUpdate";
-import ProductCreate from "./Pages/admin/product/ProductCreate";
-import AllProducts from "./Pages/admin/product/AllProducts";
-import ProductUpdate from "./Pages/admin/product/ProductUpdate";
-import Product from "./Pages/Product";
-import CategoryHome from "./Pages/category/CategoryHome";
-import SubHome from "./Pages/sub/SubHome";
-import Shop from "./Pages/Shop";
-import Cart from "./Pages/Cart";
-import Checkout from "./Pages/Checkout";
 
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { currentUser } from "./functions/auth";
+import { LoadingOutlined } from "@ant-design/icons";
+
+// import Login from "./Pages/auth/Login";
+// import Register from "./Pages/auth/Register";
+// import Home from "./Pages/Home";
+// import Header from "./components/nav/Header";
+// import SideDrawer from "./components/drawer/SideDrawer";
+// import RegisterComplete from "./Pages/auth/RegisterComplete";
+// import ForgotPassword from "./Pages/auth/ForgotPassword";
+// import History from "./Pages/user/History";
+// import UserRoute from "./components/routes/UserRoute";
+// import AdminRoute from "./components/routes/AdminRoute";
+// import Password from "./Pages/user/Password";
+// import Wishlist from "./Pages/user/Wishlist";
+// import AdminDashboard from "./Pages/admin/AdminDashboard";
+// import CategoryCreate from "./Pages/admin/category/CategoryCreate";
+// import CategoryUpdate from "./Pages/admin/category/CategoryUpdate";
+// import SubCreate from "./Pages/admin/sub/SubCreate";
+// import SubUpdate from "./Pages/admin/sub/SubUpdate";
+// import ProductCreate from "./Pages/admin/product/ProductCreate";
+// import AllProducts from "./Pages/admin/product/AllProducts";
+// import ProductUpdate from "./Pages/admin/product/ProductUpdate";
+// import Product from "./Pages/Product";
+// import CategoryHome from "./Pages/category/CategoryHome";
+// import SubHome from "./Pages/sub/SubHome";
+// import Shop from "./Pages/Shop";
+// import Cart from "./Pages/Cart";
+// import Checkout from "./Pages/Checkout";
+// import CreateCouponPage from "./Pages/coupon/CreateCouponPage";
+// import Payment from "./Pages/Payment";
+
+// using lazy
+const Login = lazy(() => import("./Pages/auth/Login"));
+const Register = lazy(() => import("./Pages/auth/Register"));
+const Home = lazy(() => import("./Pages/Home"));
+const Header = lazy(() => import("./components/nav/Header"));
+const SideDrawer = lazy(() => import("./components/drawer/SideDrawer"));
+const RegisterComplete = lazy(() => import("./Pages/auth/RegisterComplete"));
+const ForgotPassword = lazy(() => import("./Pages/auth/ForgotPassword"));
+const History = lazy(() => import("./Pages/user/History"));
+const UserRoute = lazy(() => import("./components/routes/UserRoute"));
+const AdminRoute = lazy(() => import("./components/routes/AdminRoute"));
+const Password = lazy(() => import("./Pages/user/Password"));
+const Wishlist = lazy(() => import("./Pages/user/Wishlist"));
+const AdminDashboard = lazy(() => import("./Pages/admin/AdminDashboard"));
+const CategoryCreate = lazy(() =>
+  import("./Pages/admin/category/CategoryCreate")
+);
+const CategoryUpdate = lazy(() =>
+  import("./Pages/admin/category/CategoryUpdate")
+);
+const SubCreate = lazy(() => import("./Pages/admin/sub/SubCreate"));
+const SubUpdate = lazy(() => import("./Pages/admin/sub/SubUpdate"));
+const ProductCreate = lazy(() => import("./Pages/admin/product/ProductCreate"));
+const AllProducts = lazy(() => import("./Pages/admin/product/AllProducts"));
+const ProductUpdate = lazy(() => import("./Pages/admin/product/ProductUpdate"));
+const Product = lazy(() => import("./Pages/Product"));
+const CategoryHome = lazy(() => import("./Pages/category/CategoryHome"));
+const SubHome = lazy(() => import("./Pages/sub/SubHome"));
+const Shop = lazy(() => import("./Pages/Shop"));
+const Cart = lazy(() => import("./Pages/Cart"));
+const Checkout = lazy(() => import("./Pages/Checkout"));
+const CreateCouponPage = lazy(() => import("./Pages/coupon/CreateCouponPage"));
+const Payment = lazy(() => import("./Pages/Payment"));
 
 const App = () => {
   const dispatch = useDispatch();
@@ -66,7 +102,15 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <Suspense
+      fallback={
+        <div className="col text-center p-5">
+          __ Toko Bostani EC
+          <LoadingOutlined />
+          MMERCE __
+        </div>
+      }
+    >
       <Header />
       <SideDrawer />
       <ToastContainer />
@@ -101,8 +145,10 @@ const App = () => {
         <Route exact path="/shop" component={Shop} />
         <Route exact path="/cart" component={Cart} />
         <UserRoute exact path="/checkout" component={Checkout} />
+        <AdminRoute exact path="/admin/coupon" component={CreateCouponPage} />
+        <UserRoute exact path="/payment" component={Payment} />
       </Switch>
-    </>
+    </Suspense>
   );
 };
 

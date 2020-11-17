@@ -78,6 +78,9 @@ const Shop = () => {
     // console.log("load products on user search input", text);
     const delayed = setTimeout(() => {
       fetchProducts({ query: text });
+      if (!text) {
+        loadAllProducts();
+      }
     }, 300);
 
     return () => clearTimeout(delayed);
@@ -224,6 +227,7 @@ const Shop = () => {
   const showBrands = () =>
     brands.map((b) => (
       <Radio
+        key={b}
         value={b}
         name={b}
         checked={b === brand}
@@ -253,6 +257,7 @@ const Shop = () => {
   const showColors = () =>
     colors.map((c) => (
       <Radio
+        key={c}
         value={c}
         name={c}
         checked={c === color}
